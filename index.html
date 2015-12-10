@@ -61,6 +61,52 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-SMP对称多处理器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/10/SMP对称多处理器/" class="article-date">
+  <time datetime="2015-12-10T06:28:06.000Z" itemprop="datePublished">2015-12-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/10/SMP对称多处理器/">SMP对称多处理器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对称多处理”（Symmetrical Multi-Processing）简称SMP，是指在一个计算机上汇集了一组处理器(多CPU),各CPU之间共享内存子系统以及总线结构。<br>在这种架构中，一台电脑不再由单个CPU组成，而同时由多个处理器运行操作系统的单一复本，并共享内存和一台计算机的其他资源。虽然同时使用多个CPU，但是从管理的角度来看，它们的表现就像一台单机一样。系统将任务队列对称地分布于多个CPU之上，从而极大地提高了整个系统的数据处理能力。所有的处理器都可以平等地访问内存、I/O和外部中断。在对称多处理系统中，系统资源被系统中所有CPU共享，工作负载能够均匀地分配到所有可用处理器之上。</p>
+<p>QEMU and KVM 可以最多模拟SMP到255个CPU.</p>
+<p>我们的参数中有</p>
+<p>-smp 1,sockets=1,cores=1,threads=1</p>
+<p>qemu仿真了一个具有1个vcpu，一个socket，一个core，一个threads的处理器。</p>
+<p>socket, core, threads是什么概念呢</p>
+<p>（1）socket就是主板上插cpu的槽的数目，也即管理员说的”路“<br>（2）core就是我们平时说的”核“，即双核，4核等<br>（3）thread就是每个core的硬件线程数，即超线程</p>
+<p>具体例子，某个服务器是：2路4核超线程（一般默认为2个线程），那么，通过cat /proc/cpuinfo看到的是2<em>4</em>2=16个processor，很多人也习惯成为16核了！</p>
+<p>如果使用KVM hardware-assisted virtualization，也即nova-compute.conf中的libvirt_type=kvm，也即BIOS中VD-T是打开的，则参数中accel=kvm</p>
+<p>如果不使用hardware-assisted virtualization，也即nova-compute.conf中的libvirt_type=qemu，用的是纯模拟，则有参数accel = tcg，-no-kvm</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wenjiajia.github.io/2015/12/10/SMP对称多处理器/" data-id="cihzv77l6000034mu16i08337" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-虚拟化标志" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/10/虚拟化标志/" class="article-date">
@@ -88,7 +134,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="cihzuoufq00018kmuklemk048" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="cihzv77lj000134mufvgt35wi" class="article-share-link">Share</a>
       
       
     </footer>
@@ -124,7 +170,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="cihzuoud100008kmufj6unxqi" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="cihzv77lv000634mur1ysz826" class="article-share-link">Share</a>
       
       
     </footer>
@@ -162,7 +208,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="cihzuoufw00048kmujwooi91r" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="cihzv77lp000434muxfngcus2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -200,7 +246,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="cihzuoufu00038kmupll03tof" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="cihzv77lo000334mu9gw9jg9d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -244,7 +290,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack虚拟机spice配置/" data-id="cihzuoufy00058kmuvonwttnq" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack虚拟机spice配置/" data-id="cihzv77ls000534mu8sjuvnv5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -289,7 +335,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/ubuntu-14-04server搭建samba服务器/" data-id="cihzuoufs00028kmu8acjjvu5" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/ubuntu-14-04server搭建samba服务器/" data-id="cihzv77ll000234muiicwby0i" class="article-share-link">Share</a>
       
       
     </footer>
@@ -314,7 +360,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">6</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">7</span></li></ul>
     </div>
   </div>
 
@@ -324,6 +370,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/12/10/SMP对称多处理器/">SMP对称多处理器</a>
+          </li>
         
           <li>
             <a href="/2015/12/10/虚拟化标志/">虚拟化标志</a>
@@ -339,10 +389,6 @@
         
           <li>
             <a href="/2015/12/09/shell小工具/">shell小工具</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/09/openstack虚拟机spice配置/">openstack虚拟机spice配置</a>
           </li>
         
       </ul>
