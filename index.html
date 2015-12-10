@@ -83,11 +83,73 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <h2 id="Add_Memory_to_Virtual_Machine"><a href="#Add_Memory_to_Virtual_Machine" class="headerlink" title="Add Memory to Virtual Machine"></a>Add Memory to Virtual Machine</h2><p>To add additional memory to your VM, you should do the following:</p>
+<p>Shutdown your VM<br>Edit the VM file and increase the value of maximum memory allocated to this VM<br>Restart the VM<br>Use virsh setmem to set the memory upto the maximum memory allocated for this VM.<br>In this example, let us increase the memory of myRHELVM1’s VM from 2GB to 4GB.</p>
+<p>First, shutdown the VM using virsh shutdown as shown below:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh shutdown myRHELVM1</span></span><br><span class="line">Domain myRHELVM1 is being shutdown</span><br></pre></td></tr></table></figure>
+<p>Next, edit the VM using virsh edit:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh edit myRHELVM1</span></span><br></pre></td></tr></table></figure>
+<p>Look for the below line and change the value for memory to the following. In my example, earlier it was 2097152:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;memory unit=<span class="string">'KiB'</span>&gt;<span class="number">4194304</span>&lt;/memory&gt;</span><br></pre></td></tr></table></figure>
+<p>Please note that the above value is in KB. After making the change, save and exit:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh edit myRHELVM1</span></span><br><span class="line">Domain myRHELVM1 XML configuration edited.</span><br></pre></td></tr></table></figure>
+<p>Restart the VM with the updated configuration file. Now you will see the max memory increased from 2G to 4G.</p>
+<p>You can now dynamically modify the VM memory upto the 4G max limit.</p>
+<p>Create the Domain XML file using virsh create</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh create /etc/libvirt/qemu/myRHELVM1.xml</span></span><br><span class="line">Domain myRHELVM1 created from /etc/libvirt/qemu/myRHELVM1.xml</span><br></pre></td></tr></table></figure>
+<p>View the available Memory for this domain. As you see below, even though the maximum available memory is 4GB, this domain only has 2GB (Used memory).</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh dominfo myRHELVM1 | grep memory</span></span><br><span class="line">Max memory:     <span class="number">4194304</span> KiB</span><br><span class="line">Used memory:    <span class="number">2097152</span> KiB</span><br></pre></td></tr></table></figure>
+<p>Set the memory for this domain to 4GB using virsh setmem as shown below:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh setmem myRHELVM1 4194304</span></span><br></pre></td></tr></table></figure>
+<p>Now, the following indicates that we’ve allocated 4GB (Used memory) to this domain.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh dominfo myRHELVM1 | grep memory</span></span><br><span class="line">Max memory:     <span class="number">4194304</span> KiB</span><br><span class="line">Used memory:    <span class="number">4194304</span> KiB</span><br></pre></td></tr></table></figure>
+<h2 id="Add_VCPU_to_VM"><a href="#Add_VCPU_to_VM" class="headerlink" title="Add VCPU to VM"></a>Add VCPU to VM</h2><p>To increase the virtual CPU that is allocated to the VM, do virsh edit, and change the vcpu parameter as explained below.</p>
+<p>In this example, let us increase the memory of myRHELVM1’s VM from 2GB to 4GB.</p>
+<p>First, shutdown the VM using virsh shutdown as shown below:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh shutdown myRHELVM1</span></span><br><span class="line">Domain myRHELVM1 is being shutdown</span><br></pre></td></tr></table></figure>
+<p>Next, edit the VM using virsh edit:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh edit myRHELVM1</span></span><br></pre></td></tr></table></figure>
+<p>Look for the below line and change the value for vcpu to the following. In my example, earlier it was 2.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;vcpu placement=<span class="string">'static'</span>&gt;<span class="number">4</span>&lt;/vcpu&gt;</span><br></pre></td></tr></table></figure>
+<p>Create the Domain XML file using virsh create</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh create /etc/libvirt/qemu/myRHELVM1.xml</span></span><br><span class="line">Domain myRHELVM1 created from /etc/libvirt/qemu/myRHELVM1.xml</span><br></pre></td></tr></table></figure>
+<p>View the virtual CPUs allocated to this domain as shown below. This indicates that we’ve increased the vCPU from 2 to 4.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh dominfo myRHELVM1 | grep -i cpu</span></span><br><span class="line">CPU(s):         <span class="number">4</span></span><br><span class="line">CPU time:       <span class="number">21.0</span>s</span><br></pre></td></tr></table></figure>
+<h2 id="Add_Disk_to_VM"><a href="#Add_Disk_to_VM" class="headerlink" title="Add Disk to VM"></a>Add Disk to VM</h2><p>In this example, we have only two virtual disks (vda1 and vda2) on this VM.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fdisk -l | grep vd</span></span><br><span class="line">Disk /dev/vda: <span class="number">10.7</span> GB, <span class="number">10737418240</span> bytes</span><br><span class="line">/dev/vda1   *           <span class="number">3</span>        <span class="number">1018</span>      <span class="number">512000</span>   <span class="number">83</span>  Linux</span><br><span class="line">/dev/vda2            <span class="number">1018</span>       <span class="number">20806</span>     <span class="number">9972736</span>   <span class="number">8</span>e  Linux LVM</span><br></pre></td></tr></table></figure>
+<p>There are two steps involved in creating and attaching a new storage device to Linux KVM guest VM:</p>
+<p>First, create a virtual disk image<br>Attach the virtual disk image to the VM<br>Let us create one more virtual disk and attach it to our VM. For this, we first need to create a disk image file using qemu-img create command as shown below.</p>
+<p>In the following example, we are creating a virtual disk image with 7GB of size. The disk images are typically located under /var/lib/libvirt/images/ directory.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cd /var/lib/libvirt/images/</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># qemu-img create -f raw myRHELVM1-disk2.img 7G</span></span><br><span class="line">Formatting <span class="string">'myRHELVM1-disk2.img'</span>, fmt=raw size=<span class="number">7516192768</span></span><br></pre></td></tr></table></figure>
+<p>To attach the newly created disk image, use the virsh attach-disk command as shown below:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh attach-disk myRHELVM1 --source /var/lib/libvirt/images/myRHELVM1-disk2.img --target vdb --persistent</span></span><br><span class="line">Disk attached successfully</span><br></pre></td></tr></table></figure>
+<p>The above virsh attach-disk command has the following parameters:</p>
+<p>myRHELVM1 The name of the VM<br>–source The full path of the source disk image. This is the one that we created using qemu-image command above. i.e: myRHELVM1-disk2.img<br>–target This is the device mount point. In this example, we want to attach the given disk image as /dev/vdb. Please note that we don’t really need to specify /dev. It is enough if you just specify vdb.<br>–persistent indicates that the disk that attached to the VM will be persistent.</p>
+<p>As you see below, the new /dev/vdb is now available on the VM.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># fdisk -l | grep vd</span></span><br><span class="line">Disk /dev/vda: <span class="number">10.7</span> GB, <span class="number">10737418240</span> bytes</span><br><span class="line">/dev/vda1   *           <span class="number">3</span>        <span class="number">1018</span>      <span class="number">512000</span>   <span class="number">83</span>  Linux</span><br><span class="line">/dev/vda2            <span class="number">1018</span>       <span class="number">20806</span>     <span class="number">9972736</span>   <span class="number">8</span>e  Linux LVM</span><br><span class="line">Disk /dev/vdb: <span class="number">7516</span> MB, <span class="number">7516192768</span> bytes</span><br></pre></td></tr></table></figure>
+<p>Now, you can partition the /dev/vdb device, and create multiple partitions /dev/vdb1, /dev/vdb2, etc, and mount it to the VM. Use fdisk to create the partitions as we explained earlier.</p>
+<p>Similarly to detach a disk from the guest VM, you can use the below command. But be careful to specify the correct vd* otherwise you may end-up removing wrong device.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh detach-disk myRHELVM1 vdb</span></span><br><span class="line">Disk detached successfully</span><br></pre></td></tr></table></figure>
+<h2 id="Save_Virtual_Machine_Configuration"><a href="#Save_Virtual_Machine_Configuration" class="headerlink" title="Save Virtual Machine Configuration"></a>Save Virtual Machine Configuration</h2><p>If you make lot of changes to your VM, it is recommended that you save the configurations.</p>
+<p>Use the virsh dumpxml file to take a backup and save the configuration information of your VM as shown below.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh dumpxml myRHELVM1 &gt; myrhelvm1.xml</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># ls myrhelvm1.xml</span></span><br><span class="line">myrhelvm1.xml</span><br></pre></td></tr></table></figure>
+<p>Once you have the configuration file in the XML format, you can always recreate your guest VM from this XML file, using virsh create command as shown below:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">virsh create myrhelvm1.xml</span><br></pre></td></tr></table></figure>
+<h2 id="Delete_KVM_Virtual_Machine"><a href="#Delete_KVM_Virtual_Machine" class="headerlink" title="Delete KVM Virtual Machine"></a>Delete KVM Virtual Machine</h2><p>If you’ve created multiple VMs for testing purpose, and like to delete them, you should do the following three steps:</p>
+<p>Shutdown the VM<br>Destroy the VM (and undefine it)<br>Remove the Disk Image File</p>
+<p>In this example, let us delete myRHELVM2 VM. First, shutdown this VM:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh shutdown myRHELVM2</span></span><br><span class="line">Domain myRHELVM2 is being shutdown</span><br></pre></td></tr></table></figure>
+<p>Next, destory this VM as shown below:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh destroy myRHELVM2</span></span><br><span class="line">Domain myRHELVM2 destroyed</span><br></pre></td></tr></table></figure>
+<p>Apart from destroying it, you should also undefine the VM as shown below:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># virsh undefine myRHELVM2</span></span><br><span class="line">Domain myRHELVM2 has been undefined</span><br></pre></td></tr></table></figure>
+<p>Finally, remove any disk image file that you’ve created for this VM from the /var/lib/libvirt/images directory:<br>Now you can remove the disk img file under /var/lib/libvirt/images</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm /var/lib/libvirt/images/myRHELVM2-disk1.img</span><br><span class="line">rm /var/lib/libvirt/images/myRHELVM2-disk2.img</span><br></pre></td></tr></table></figure>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/" data-id="cii00lofp0000b8mulmi0qejb" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/" data-id="cii0161z40000rcmu1z2fllb1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -133,7 +195,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/SMP对称多处理器/" data-id="cii00lohv0007b8mui1x6to02" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/SMP对称多处理器/" data-id="cii0161zw0007rcmuj1j8admy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -170,7 +232,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="cii00lohb0001b8muw0k1idoc" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="cii0161zh0001rcmuq1czntq6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -206,7 +268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="cii00lohu0006b8mum4yvi19f" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="cii0161zu0006rcmublsxfgu0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -244,7 +306,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="cii00lohq0004b8mubgfxujdg" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="cii0161zq0004rcmuv8rdlmwc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -282,7 +344,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="cii00loho0003b8muwhx03vtp" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="cii0161zn0003rcmuuotkdry5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -326,7 +388,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack虚拟机spice配置/" data-id="cii00lohs0005b8mulxwm6ust" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack虚拟机spice配置/" data-id="cii0161zs0005rcmu8bu175a0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -371,7 +433,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/ubuntu-14-04server搭建samba服务器/" data-id="cii00lohk0002b8muclbxwcye" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/ubuntu-14-04server搭建samba服务器/" data-id="cii0161zk0002rcmusxqaqoat" class="article-share-link">Share</a>
       
       
     </footer>
