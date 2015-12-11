@@ -3,21 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>openstack镜像控制台日志重定向 | DoubleJ</title>
+  <title>openstackk virt_type初探 | DoubleJ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="12345$ vi /etc/default/grubadd GRUB_CMDLINE_LINUX=&quot;console=tty0 console=ttyS0,115200&quot; $ update-grub
-And console.log appears in next boot">
+  <meta name="description" content="virt_type 初探创建虚拟机流程暂不介绍，直接看libvirt的driver中spawn方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="openstack镜像控制台日志重定向">
-<meta property="og:url" content="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/index.html">
+<meta property="og:title" content="openstackk virt_type初探">
+<meta property="og:url" content="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/index.html">
 <meta property="og:site_name" content="DoubleJ">
-<meta property="og:description" content="12345$ vi /etc/default/grubadd GRUB_CMDLINE_LINUX=&quot;console=tty0 console=ttyS0,115200&quot; $ update-grub
-And console.log appears in next boot">
-<meta property="og:updated_time" content="2015-12-09T04:51:26.053Z">
+<meta property="og:description" content="virt_type 初探创建虚拟机流程暂不介绍，直接看libvirt的driver中spawn方法">
+<meta property="og:updated_time" content="2015-12-11T02:43:19.366Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="openstack镜像控制台日志重定向">
-<meta name="twitter:description" content="12345$ vi /etc/default/grubadd GRUB_CMDLINE_LINUX=&quot;console=tty0 console=ttyS0,115200&quot; $ update-grub
-And console.log appears in next boot">
+<meta name="twitter:title" content="openstackk virt_type初探">
+<meta name="twitter:description" content="virt_type 初探创建虚拟机流程暂不介绍，直接看libvirt的driver中spawn方法">
   
     <link rel="alternative" href="/atom.xml" title="DoubleJ" type="application/atom+xml">
   
@@ -63,10 +60,10 @@ And console.log appears in next boot">
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-openstack镜像控制台日志重定向" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-openstackk-virt-type初探" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/12/09/openstack镜像控制台日志重定向/" class="article-date">
-  <time datetime="2015-12-09T04:49:11.000Z" itemprop="datePublished">2015-12-09</time>
+    <a href="/2015/12/11/openstackk-virt-type初探/" class="article-date">
+  <time datetime="2015-12-11T02:35:06.000Z" itemprop="datePublished">2015-12-11</time>
 </a>
     
   </div>
@@ -77,7 +74,7 @@ And console.log appears in next boot">
         
   
     <h1 class="article-title" itemprop="name">
-      openstack镜像控制台日志重定向
+      openstackk virt_type初探
     </h1>
   
 
@@ -85,13 +82,12 @@ And console.log appears in next boot">
     
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ vi /etc/default/grub</span><br><span class="line"></span><br><span class="line">add GRUB_CMDLINE_LINUX=<span class="string">"console=tty0 console=ttyS0,115200"</span> </span><br><span class="line"></span><br><span class="line">$ update-grub</span><br></pre></td></tr></table></figure>
-<p>And console.log appears in next boot</p>
-
+        <h2 id="virt_type__u521D_u63A2"><a href="#virt_type__u521D_u63A2" class="headerlink" title="virt_type 初探"></a>virt_type 初探</h2><p>创建虚拟机流程暂不介绍，直接看libvirt的driver中spawn方法</p>
+<img class="[class names] D:/博客图片/spawn.png [width] [height] [title text [alt text]]">
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="cii12k8xg000418muqxa3p9b4" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/" data-id="cii12k8xn000618mu55esgrq8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -100,19 +96,10 @@ And console.log appears in next boot">
     
 <nav id="article-nav">
   
-    <a href="/2015/12/09/nova-conf/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          nova.conf
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/12/09/shell小工具/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">shell小工具</div>
+      <div class="article-nav-title">Add Memory vCPU Hard Disk to Linux KVM Virtual Machine</div>
     </a>
   
 </nav>
