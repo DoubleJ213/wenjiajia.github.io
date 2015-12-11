@@ -104,11 +104,12 @@
 <p>类型 2 hypervisor QEMU 使用主机操作系统获取虚拟机CPU的指令，然后再物理CPU上执行。当使用KVM的QEMU硬件加速，两者的结合成为一个1型虚拟机管理程序。</p>
 <p>硬件加速带来的好处将是只有在虚拟机的CPU也使用相同的架构（x86)，如果虚拟机需要Power PC CPU,但是物理服务器是Intel CPU，因此Virt_type不能配置KVM，应该使用QEMU，不过性能有损耗。</p>
 <p>基于以上的讨论，很显然QEMU在基于Linux的开源虚拟化解决方案起着非常关键的作用。对于所有的实际应用中，需要KVM的QEMU的性能提升。然而，KVM本身不能提供完整的虚拟化解决方案。它需要QEMU支持</p>
+<p>顺带提一下半虚拟化<br>半虚拟化技术英文是paravirtualization，也叫做准虚拟化技术，现在比较热门，它就是在全虚拟化的基础上，把客户操作系统进行了修改，增加了一个专门的API，这个API可以将客户操作系统发出的指令进行最优化，即不需要Hypervisor耗费一定的资源进行翻译操作，因此Hypervisor的工作负担变得非常的小，因此整体的性能也有很大的提高。不过缺点就是，要修改包含该API的操作系统，但是对于某些不含该API的操作系统（主要是windows）来说，就不行能用这种方法。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/" data-id="cii1ada950006gsmupek9f5vg" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/" data-id="cii1akwfn0006nwmuoxopvth9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -206,7 +207,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/" data-id="cii1ada8g0000gsmu6cpsruyf" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/" data-id="cii1akwe40000nwmus84ae35n" class="article-share-link">Share</a>
       
       
     </footer>
@@ -252,7 +253,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/SMP对称多处理器/" data-id="cii1ada9c0008gsmuv95wheh2" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/SMP对称多处理器/" data-id="cii1akwfw0008nwmus4rgjipt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -289,7 +290,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="cii1ada8t0001gsmu3s4eu3m1" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="cii1akwek0001nwmukbtg1ro7" class="article-share-link">Share</a>
       
       
     </footer>
@@ -325,7 +326,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="cii1ada980007gsmu7xcurid8" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="cii1akwfs0007nwmu0a4z3owm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -363,7 +364,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="cii1ada900004gsmumstlajih" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="cii1akwfh0004nwmuwo162d1v" class="article-share-link">Share</a>
       
       
     </footer>
@@ -401,7 +402,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="cii1ada8y0003gsmuh2da74au" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="cii1akwfc0003nwmu5lompeta" class="article-share-link">Share</a>
       
       
     </footer>
@@ -445,7 +446,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack虚拟机spice配置/" data-id="cii1ada920005gsmuxai6hewx" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack虚拟机spice配置/" data-id="cii1akwfk0005nwmu8xt5zabj" class="article-share-link">Share</a>
       
       
     </footer>
@@ -490,7 +491,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/ubuntu-14-04server搭建samba服务器/" data-id="cii1ada8w0002gsmu0ar4m8xi" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/ubuntu-14-04server搭建samba服务器/" data-id="cii1akwf90002nwmur4q59l18" class="article-share-link">Share</a>
       
       
     </footer>

@@ -15,7 +15,7 @@
 <meta property="og:description" content="nova如何获取virt_type值虚拟机的创建、硬重启、冷迁移、调整大小等流程都设计到xml文件初始化
 这里直接看虚拟机创建流程，主要看libvirt的driver中spawn方法
 12345678910111213141516171819202122def spawn(self, context, instance, image_meta, injected_files,          a">
-<meta property="og:updated_time" content="2015-12-11T06:21:30.782Z">
+<meta property="og:updated_time" content="2015-12-11T06:27:47.137Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="openstackk virt_type初探">
 <meta name="twitter:description" content="nova如何获取virt_type值虚拟机的创建、硬重启、冷迁移、调整大小等流程都设计到xml文件初始化
@@ -109,11 +109,12 @@
 <p>类型 2 hypervisor QEMU 使用主机操作系统获取虚拟机CPU的指令，然后再物理CPU上执行。当使用KVM的QEMU硬件加速，两者的结合成为一个1型虚拟机管理程序。</p>
 <p>硬件加速带来的好处将是只有在虚拟机的CPU也使用相同的架构（x86)，如果虚拟机需要Power PC CPU,但是物理服务器是Intel CPU，因此Virt_type不能配置KVM，应该使用QEMU，不过性能有损耗。</p>
 <p>基于以上的讨论，很显然QEMU在基于Linux的开源虚拟化解决方案起着非常关键的作用。对于所有的实际应用中，需要KVM的QEMU的性能提升。然而，KVM本身不能提供完整的虚拟化解决方案。它需要QEMU支持</p>
+<p>顺带提一下半虚拟化<br>半虚拟化技术英文是paravirtualization，也叫做准虚拟化技术，现在比较热门，它就是在全虚拟化的基础上，把客户操作系统进行了修改，增加了一个专门的API，这个API可以将客户操作系统发出的指令进行最优化，即不需要Hypervisor耗费一定的资源进行翻译操作，因此Hypervisor的工作负担变得非常的小，因此整体的性能也有很大的提高。不过缺点就是，要修改包含该API的操作系统，但是对于某些不含该API的操作系统（主要是windows）来说，就不行能用这种方法。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/" data-id="cii1ada950006gsmupek9f5vg" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/" data-id="cii1akwfn0006nwmuoxopvth9" class="article-share-link">Share</a>
       
       
     </footer>
