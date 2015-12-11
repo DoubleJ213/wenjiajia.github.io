@@ -83,19 +83,18 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="virt_type__u521D_u63A2"><a href="#virt_type__u521D_u63A2" class="headerlink" title="virt_type 初探"></a>virt_type 初探</h2><p>创建虚拟机流程暂不介绍，直接看libvirt的driver中spawn方法</p>
+        <h2 id="virt_type__u521D_u63A2"><a href="#virt_type__u521D_u63A2" class="headerlink" title="virt_type 初探"></a>virt_type 初探</h2><p>创建虚拟机流程中其他部分暂不介绍，直接看libvirt的driver中spawn方法</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">def spawn(self, context, instance, image_meta, injected_files,</span><br><span class="line">          admin_password, network_info=None, block_device_info=None):</span><br><span class="line">    image_meta = objects.ImageMeta.from_dict(image_meta)</span><br><span class="line">    disk_info = blockinfo.get_disk_info(CONF.libvirt.virt_<span class="built_in">type</span>,</span><br><span class="line">                                        instance,</span><br><span class="line">                                        image_meta,</span><br><span class="line">                                        block_device_info)</span><br><span class="line">    self._create_image(context, instance,</span><br><span class="line">                       disk_info[<span class="string">'mapping'</span>],</span><br><span class="line">                       network_info=network_info,</span><br><span class="line">                       block_device_info=block_device_info,</span><br><span class="line">                       files=injected_files,</span><br><span class="line">                       admin_pass=admin_password)</span><br><span class="line">    xml = self._get_guest_xml(context, instance, network_info,</span><br><span class="line">                              disk_info, image_meta,</span><br><span class="line">                              block_device_info=block_device_info,</span><br><span class="line">                              write_to_disk=True)</span><br><span class="line">    self._create_domain_and_network(context, xml, instance, network_info,</span><br><span class="line">                                    disk_info,</span><br><span class="line">                                    block_device_info=block_device_info)</span><br><span class="line">    LOG.debug(<span class="string">"Instance is running"</span>, instance=instance)</span><br></pre></td></tr></table></figure>
 <p>xml 初始化方法 _get_guest_xml</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">def _get_guest_xml(self, context, instance, network_info, disk_info,</span><br><span class="line">                   image_meta, rescue=None,</span><br><span class="line">                   block_device_info=None, write_to_disk=False):</span><br><span class="line">    <span class="comment"># NOTE(danms): Stringifying a NetworkInfo will take a lock. Do</span></span><br><span class="line">    <span class="comment"># this ahead of time so that we don't acquire it while also</span></span><br><span class="line">    <span class="comment"># holding the logging lock.</span></span><br><span class="line">    network_info_str = str(network_info)</span><br><span class="line">    msg = (<span class="string">'Start _get_guest_xml '</span></span><br><span class="line">           <span class="string">'network_info=%(network_info)s '</span></span><br><span class="line">           <span class="string">'disk_info=%(disk_info)s '</span></span><br><span class="line">           <span class="string">'image_meta=%(image_meta)s rescue=%(rescue)s '</span></span><br><span class="line">           <span class="string">'block_device_info=%(block_device_info)s'</span> %</span><br><span class="line">           &#123;<span class="string">'network_info'</span>: network_info_str, <span class="string">'disk_info'</span>: disk_info,</span><br><span class="line">            <span class="string">'image_meta'</span>: image_meta, <span class="string">'rescue'</span>: rescue,</span><br><span class="line">            <span class="string">'block_device_info'</span>: block_device_info&#125;)</span><br><span class="line">    <span class="comment"># NOTE(mriedem): block_device_info can contain auth_password so we</span></span><br><span class="line">    <span class="comment"># need to sanitize the password in the message.</span></span><br><span class="line">    LOG.debug(strutils.mask_password(msg), instance=instance)</span><br><span class="line">    conf = self._get_guest_config(instance, network_info, image_meta,</span><br><span class="line">                                  disk_info, rescue, block_device_info,</span><br><span class="line">                                  context)</span><br><span class="line">    xml = conf.to_xml()</span><br></pre></td></tr></table></figure>
 <p>xml 参数 conf获取</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">def _get_guest_config(self, instance, network_info, image_meta,</span><br><span class="line">                      disk_info, rescue=None, block_device_info=None,</span><br><span class="line">                      context=None):</span><br><span class="line">    <span class="string">""</span><span class="string">"Get config data for parameters.</span><br><span class="line"></span><br><span class="line">    :param rescue: optional dictionary that should contain the key</span><br><span class="line">        'ramdisk_id' if a ramdisk is needed for the rescue image and</span><br><span class="line">        'kernel_id' if a kernel is needed for the rescue image.</span><br><span class="line">    "</span><span class="string">""</span></span><br><span class="line">    flavor = instance.flavor</span><br><span class="line">    inst_path = libvirt_utils.get_instance_path(instance)</span><br><span class="line">    disk_mapping = disk_info[<span class="string">'mapping'</span>]</span><br><span class="line"></span><br><span class="line">    virt_<span class="built_in">type</span> = CONF.libvirt.virt_<span class="built_in">type</span></span><br><span class="line">    guest = vconfig.LibvirtConfigGuest()</span><br><span class="line">    guest.virt_<span class="built_in">type</span> = virt_<span class="built_in">type</span></span><br><span class="line">    guest.name = instance.name</span><br><span class="line">    guest.uuid = instance.uuid</span><br><span class="line">    <span class="comment"># We are using default unit for memory: KiB</span></span><br><span class="line">    guest.memory = flavor.memory_mb * units.Ki</span><br><span class="line">    guest.vcpus = flavor.vcpus</span><br><span class="line">    allowed_cpus = hardware.get_vcpu_pin_<span class="built_in">set</span>()</span><br><span class="line">    pci_devs = pci_manager.get_instance_pci_devs(instance, <span class="string">'all'</span>)</span><br><span class="line"></span><br><span class="line">    guest_numa_config = self._get_guest_numa_config(</span><br><span class="line">            instance.numa_topology, flavor, pci_devs, allowed_cpus)</span><br></pre></td></tr></table></figure>
 <p>可以看到 virt_type是直接读取的配置文件中的值</p>
-<p>virt_type = CONF.libvirt.virt_type</p>
-
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">virt_<span class="built_in">type</span> = CONF.libvirt.virt_<span class="built_in">type</span></span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/" data-id="cii132nr7000618mul0cga49r" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/" data-id="cii1344x500061omuns4bcojb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -193,7 +192,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/" data-id="cii132nps000018mu3itxbrmn" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/" data-id="cii1344w100001omu9dd7gh5z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -239,7 +238,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/SMP对称多处理器/" data-id="cii132nri000818munafmc184" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/SMP对称多处理器/" data-id="cii1344xh00081omu5orgmy0f" class="article-share-link">Share</a>
       
       
     </footer>
@@ -276,7 +275,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="cii132nqi000118muk79rr64d" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="cii1344wj00011omu6auqzbm3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -312,7 +311,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="cii132nre000718musohkvr06" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="cii1344x900071omuibllbc2e" class="article-share-link">Share</a>
       
       
     </footer>
@@ -350,7 +349,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="cii132nqy000418mugol3ai95" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="cii1344wz00041omu052alclq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -388,7 +387,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="cii132nqw000318muep6l2lz1" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="cii1344wp00031omuih30ldjk" class="article-share-link">Share</a>
       
       
     </footer>
@@ -432,7 +431,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack虚拟机spice配置/" data-id="cii132nr4000518mu9qoupmf0" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack虚拟机spice配置/" data-id="cii1344x200051omunp3245zc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -477,7 +476,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/ubuntu-14-04server搭建samba服务器/" data-id="cii132nqt000218muny46vz4b" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/ubuntu-14-04server搭建samba服务器/" data-id="cii1344wm00021omujzbxm2qh" class="article-share-link">Share</a>
       
       
     </footer>
