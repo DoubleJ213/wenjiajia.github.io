@@ -86,7 +86,7 @@
         <p>首先，在宿主机上关闭虚拟机，qcow2格式不支持扩容，转换磁盘格式为raw：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">qemu-img convert <span class="operator">-f</span> qcow2 test.qcow2 -O raw test.raw</span><br></pre></td></tr></table></figure>
 <p>raw格式的毛病一大堆，什么厚磁盘模式啦；什么不支持snap了之类的，但它有一个最大的优势：因为raw是条带化的，扩容相当方便！</p>
-<p>创建一个空白的raw，10G的额外空间应该查不多了。</p>
+<p>创建一个空白的raw，10G的额外空间。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">qemu-img create <span class="operator">-f</span> raw empty.raw <span class="number">10</span>G</span><br></pre></td></tr></table></figure>
 <p>将新的空间追加到旧的磁盘文件之上，Linux的管道操作果然方便啊！</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">cat empty.raw &gt;&gt; test.raw</span><br></pre></td></tr></table></figure>
@@ -97,7 +97,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/14/虚拟机磁盘扩容/" data-id="cii5ou33o0001csmutb2ozusf" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/14/虚拟机磁盘扩容/" data-id="cii5ov6v40001b0muxawezmft" class="article-share-link">Share</a>
       
       
     </footer>
@@ -155,7 +155,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/" data-id="cii5ou34c0007csmuhd11k9sz" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/" data-id="cii5ov6vj0007b0mudlv0yef3" class="article-share-link">Share</a>
       
       
     </footer>
@@ -253,7 +253,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/" data-id="cii5ou31u0000csmup7ke160v" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/" data-id="cii5ov6us0000b0mu0dvsb002" class="article-share-link">Share</a>
       
       
     </footer>
@@ -299,7 +299,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/SMP对称多处理器/" data-id="cii5ou34h0009csmuchsca9qe" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/SMP对称多处理器/" data-id="cii5ov6vo0009b0mum69hegmd" class="article-share-link">Share</a>
       
       
     </footer>
@@ -336,7 +336,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="cii5ou33w0002csmulcyt5p8y" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="cii5ov6v70002b0muiwbet803" class="article-share-link">Share</a>
       
       
     </footer>
@@ -372,7 +372,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="cii5ou34f0008csmu0fz268vf" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="cii5ov6vl0008b0muysaw98jz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -410,7 +410,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="cii5ou3450005csmuzs5osivh" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="cii5ov6vd0005b0mulzbqx8tr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -448,7 +448,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="cii5ou3420004csmuq34c1r15" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="cii5ov6vb0004b0mufjwpkona" class="article-share-link">Share</a>
       
       
     </footer>
@@ -492,7 +492,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack虚拟机spice配置/" data-id="cii5ou3480006csmuy0w2wfn5" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack虚拟机spice配置/" data-id="cii5ov6vf0006b0muglz67l1c" class="article-share-link">Share</a>
       
       
     </footer>
@@ -537,7 +537,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/ubuntu-14-04server搭建samba服务器/" data-id="cii5ou3400003csmulb218p83" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/ubuntu-14-04server搭建samba服务器/" data-id="cii5ov6v90003b0muhl3bsai2" class="article-share-link">Share</a>
       
       
     </footer>
