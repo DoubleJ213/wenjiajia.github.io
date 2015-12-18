@@ -61,6 +61,54 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-密封Linux虚拟机为部署模板" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/18/密封Linux虚拟机为部署模板/" class="article-date">
+  <time datetime="2015-12-18T03:44:26.000Z" itemprop="datePublished">2015-12-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/18/密封Linux虚拟机为部署模板/">密封Linux虚拟机为部署模板</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>###密封Linux虚拟机为部署模板</p>
+<p>##在其成模板之前。这防止从模板部署的虚拟机之间的冲突。</p>
+<p>1。登录到虚拟机。标志系统进行重新配置，以root身份运行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># touch /.unconfigured</span></span><br></pre></td></tr></table></figure>
+<p>2。删除主机的ssh密钥，运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># rm -rf /etc/ssh/ssh_host_*</span></span><br></pre></td></tr></table></figure>
+<p>3。设置/etc/sysconfig/network 中HOSTNAME=localhost.localdomain 。</p>
+<p>4。删除/ etc/udev/rules.d/70- *，运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># rm -rf /etc/udev/rules.d/70-*</span></span><br></pre></td></tr></table></figure>
+<p>5。删除/etc/sysconfig/network-scripts/ifcfg-eth* 中 HWADDR 、UUID行。</p>
+<p>6。（可选）从 /var/log 目录中删除所有日志记录，删除命令历史记录。</p>
+<p>7。关闭虚拟机，运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># poweroff</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wenjiajia.github.io/2015/12/18/密封Linux虚拟机为部署模板/" data-id="ciib4w61r000330mu7bi7v9hp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-虚拟机磁盘扩容" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/14/虚拟机磁盘扩容/" class="article-date">
@@ -97,7 +145,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/14/虚拟机磁盘扩容/" data-id="cii5ozdvu0001lwmu0sdr22zj" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/14/虚拟机磁盘扩容/" data-id="ciib4w5zi000130muzwxrgbc0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -155,7 +203,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/" data-id="cii5ozdwa0007lwmuj1os8404" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/" data-id="ciib4w622000830muhqsg2bk2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -253,7 +301,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/" data-id="cii5ozdvh0000lwmuuzpoyv38" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/" data-id="ciib4w5yo000030mubvxmcl2c" class="article-share-link">Share</a>
       
       
     </footer>
@@ -299,7 +347,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/SMP对称多处理器/" data-id="cii5ozdwj0009lwmuktcy7ab2" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/SMP对称多处理器/" data-id="ciib4w627000a30mufnvcfor6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -336,7 +384,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="cii5ozdvx0002lwmuyxznyue8" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="ciib4w61k000230mu7veyt7u0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -372,7 +420,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="cii5ozdwf0008lwmuia9ruhxl" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="ciib4w625000930mui0ql73ce" class="article-share-link">Share</a>
       
       
     </footer>
@@ -410,7 +458,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="cii5ozdw40005lwmu43h5qfxv" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="ciib4w61y000630muujujb98t" class="article-share-link">Share</a>
       
       
     </footer>
@@ -448,7 +496,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="cii5ozdw20004lwmurcgaphf3" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="ciib4w61v000530muxikcolgs" class="article-share-link">Share</a>
       
       
     </footer>
@@ -492,7 +540,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack虚拟机spice配置/" data-id="cii5ozdw50006lwmuae0wgxl1" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack虚拟机spice配置/" data-id="ciib4w620000730muwr6rz4wp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -502,51 +550,10 @@
 
 
   
-    <article id="post-ubuntu-14-04server搭建samba服务器" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/12/09/ubuntu-14-04server搭建samba服务器/" class="article-date">
-  <time datetime="2015-12-09T04:19:40.000Z" itemprop="datePublished">2015-12-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/09/ubuntu-14-04server搭建samba服务器/">Ubuntu-14.04server搭建samba服务器</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="1-_u5B89_u88C5ubuntu14-04_u7CFB_u7EDF"><a href="#1-_u5B89_u88C5ubuntu14-04_u7CFB_u7EDF" class="headerlink" title="1.安装ubuntu14.04系统"></a>1.安装ubuntu14.04系统</h3><p>安装服务器时，安装上openssl server、samba profile 两个软件</p>
-<h3 id="2-_u521B_u5EFA_u5171_u4EAB_u76EE_u5F55"><a href="#2-_u521B_u5EFA_u5171_u4EAB_u76EE_u5F55" class="headerlink" title="2.创建共享目录"></a>2.创建共享目录</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir /home/wen/samba_share</span><br><span class="line">$ sudo chmod <span class="number">777</span> samba_share/</span><br><span class="line">$ chown wen:wen /home/wen/samba_share -R</span><br></pre></td></tr></table></figure>
-<h3 id="3-_u521B_u5EFA_u914D_u7F6E_u7528_u6237"><a href="#3-_u521B_u5EFA_u914D_u7F6E_u7528_u6237" class="headerlink" title="3.创建配置用户"></a>3.创建配置用户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo adduser wen  </span><br><span class="line">$ sudo touch /etc/samba/smbpasswd  </span><br><span class="line">$ sudo smbpasswd <span class="operator">-a</span> wen</span><br></pre></td></tr></table></figure>
-<h3 id="4-_u7F16_u8F91_u914D_u7F6E_u6587_u4EF6"><a href="#4-_u7F16_u8F91_u914D_u7F6E_u6587_u4EF6" class="headerlink" title="4.编辑配置文件"></a>4.编辑配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.bak</span><br><span class="line">$ vim /etc/samba/smb.conf</span><br></pre></td></tr></table></figure>
-<p>文档最后加上</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[share]  </span><br><span class="line">path = /home/wen/samba_share  </span><br><span class="line">available = yes  </span><br><span class="line">browseable = yes  </span><br><span class="line">public = yes  </span><br><span class="line">writable = yes  </span><br><span class="line"></span><br><span class="line">[gloab]</span><br><span class="line">workgroup = wen</span><br><span class="line">security=user 改为security=samba_share   samba_share为共享出去的目录名（此项配置的该目录不需要密码访问，子目录还需要）</span><br></pre></td></tr></table></figure>
-<h3 id="5-_smbpasswd__u547D_u4EE4_u7684_u7528_u6CD5"><a href="#5-_smbpasswd__u547D_u4EE4_u7684_u7528_u6CD5" class="headerlink" title="5. smbpasswd 命令的用法"></a>5. smbpasswd 命令的用法</h3><p>smbpasswd -a 增加用户（要增加的用户必须以是系统用户）<br>smbpasswd -d 冻结用户，就是这个用户不能在登录了<br>smbpasswd -e 恢复用户，解冻用户，让冻结的用户可以在使用<br>smbpasswd -n 把用户的密码设置成空.<br>             要在global中写入 null passwords -true<br>smbpasswd -x  删除用户</p>
-<h3 id="6-__u91CD_u542Fsamba"><a href="#6-__u91CD_u542Fsamba" class="headerlink" title="6. 重启samba"></a>6. 重启samba</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service samba restart  </span><br><span class="line">$ <span class="comment">#sudo service smbd restart</span></span><br></pre></td></tr></table></figure>
-<h3 id="7-__u5982_u679C_u5F00_u4E86_u9632_u706B_u5899_uFF0C_u9700_u8981_u5F00_u653E_u7AEF_u53E3"><a href="#7-__u5982_u679C_u5F00_u4E86_u9632_u706B_u5899_uFF0C_u9700_u8981_u5F00_u653E_u7AEF_u53E3" class="headerlink" title="7. 如果开了防火墙，需要开放端口"></a>7. 如果开了防火墙，需要开放端口</h3><h3 id="8-__u8BBF_u95EE"><a href="#8-__u8BBF_u95EE" class="headerlink" title="8. 访问"></a>8. 访问</h3><p>文件夹来访问，直接在地址中输入“//ip”就可以看到 share文件夹了</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/ubuntu-14-04server搭建samba服务器/" data-id="cii5ozdw00003lwmuf89qkxfu" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    </nav>
   
 </section>
         
@@ -562,7 +569,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">10</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">11</span></li></ul>
     </div>
   </div>
 
@@ -572,6 +579,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/12/18/密封Linux虚拟机为部署模板/">密封Linux虚拟机为部署模板</a>
+          </li>
         
           <li>
             <a href="/2015/12/14/虚拟机磁盘扩容/">虚拟机磁盘扩容</a>
@@ -587,10 +598,6 @@
         
           <li>
             <a href="/2015/12/10/SMP对称多处理器/">SMP对称多处理器</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/10/虚拟化标志/">虚拟化标志</a>
           </li>
         
       </ul>

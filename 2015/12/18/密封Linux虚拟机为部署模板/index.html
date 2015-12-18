@@ -3,18 +3,36 @@
 <head>
   <meta charset="utf-8">
   
-  <title>shell小工具 | DoubleJ</title>
+  <title>密封Linux虚拟机为部署模板 | DoubleJ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="expect12345678910111213expect -c &quot;    set timeout 30;    spawn scp -o StrictHostKeyChecking=no $&amp;#123;Test_DIR&amp;#125;/etc/objects/hosts/$&amp;#123;HOSTNAME&amp;#125;.cfg root@$CONTROL_NODE_IP:$&amp;#123;Test_DIR&amp;#">
+  <meta name="description" content="###密封Linux虚拟机为部署模板
+##在其成模板之前。这防止从模板部署的虚拟机之间的冲突。
+1。登录到虚拟机。标志系统进行重新配置，以root身份运行以下命令：
+12# touch /.unconfigured
+2。删除主机的ssh密钥，运行：
+12# rm -rf /etc/ssh/ssh_host_*
+3。设置/etc/sysconfig/network 中HOSTNAME=localho">
 <meta property="og:type" content="article">
-<meta property="og:title" content="shell小工具">
-<meta property="og:url" content="http://wenjiajia.github.io/2015/12/09/shell小工具/index.html">
+<meta property="og:title" content="密封Linux虚拟机为部署模板">
+<meta property="og:url" content="http://wenjiajia.github.io/2015/12/18/密封Linux虚拟机为部署模板/index.html">
 <meta property="og:site_name" content="DoubleJ">
-<meta property="og:description" content="expect12345678910111213expect -c &quot;    set timeout 30;    spawn scp -o StrictHostKeyChecking=no $&amp;#123;Test_DIR&amp;#125;/etc/objects/hosts/$&amp;#123;HOSTNAME&amp;#125;.cfg root@$CONTROL_NODE_IP:$&amp;#123;Test_DIR&amp;#">
-<meta property="og:updated_time" content="2015-12-09T04:53:44.774Z">
+<meta property="og:description" content="###密封Linux虚拟机为部署模板
+##在其成模板之前。这防止从模板部署的虚拟机之间的冲突。
+1。登录到虚拟机。标志系统进行重新配置，以root身份运行以下命令：
+12# touch /.unconfigured
+2。删除主机的ssh密钥，运行：
+12# rm -rf /etc/ssh/ssh_host_*
+3。设置/etc/sysconfig/network 中HOSTNAME=localho">
+<meta property="og:updated_time" content="2015-12-18T03:46:18.953Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="shell小工具">
-<meta name="twitter:description" content="expect12345678910111213expect -c &quot;    set timeout 30;    spawn scp -o StrictHostKeyChecking=no $&amp;#123;Test_DIR&amp;#125;/etc/objects/hosts/$&amp;#123;HOSTNAME&amp;#125;.cfg root@$CONTROL_NODE_IP:$&amp;#123;Test_DIR&amp;#">
+<meta name="twitter:title" content="密封Linux虚拟机为部署模板">
+<meta name="twitter:description" content="###密封Linux虚拟机为部署模板
+##在其成模板之前。这防止从模板部署的虚拟机之间的冲突。
+1。登录到虚拟机。标志系统进行重新配置，以root身份运行以下命令：
+12# touch /.unconfigured
+2。删除主机的ssh密钥，运行：
+12# rm -rf /etc/ssh/ssh_host_*
+3。设置/etc/sysconfig/network 中HOSTNAME=localho">
   
     <link rel="alternative" href="/atom.xml" title="DoubleJ" type="application/atom+xml">
   
@@ -60,10 +78,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-shell小工具" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-密封Linux虚拟机为部署模板" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/12/09/shell小工具/" class="article-date">
-  <time datetime="2015-12-09T04:45:31.000Z" itemprop="datePublished">2015-12-09</time>
+    <a href="/2015/12/18/密封Linux虚拟机为部署模板/" class="article-date">
+  <time datetime="2015-12-18T03:44:26.000Z" itemprop="datePublished">2015-12-18</time>
 </a>
     
   </div>
@@ -74,7 +92,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      shell小工具
+      密封Linux虚拟机为部署模板
     </h1>
   
 
@@ -82,13 +100,23 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h2 id="expect"><a href="#expect" class="headerlink" title="expect"></a>expect</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">expect -c <span class="string">"</span><br><span class="line">    set timeout 30;</span><br><span class="line">    spawn scp -o StrictHostKeyChecking=no <span class="variable">$&#123;Test_DIR&#125;</span>/etc/objects/hosts/<span class="variable">$&#123;HOSTNAME&#125;</span>.cfg root@<span class="variable">$CONTROL_NODE_IP</span>:<span class="variable">$&#123;Test_DIR&#125;</span>/etc/objects/hosts/<span class="variable">$&#123;HOSTNAME&#125;</span>.cfg</span><br><span class="line">    expect &#123;</span><br><span class="line">                *assword:* &#123;send -- <span class="variable">$CONTROL_NODE_ROOT_PASSWORD</span>\r;</span><br><span class="line">                             expect &#123;</span><br><span class="line">                                *denied* &#123;exit 2;&#125;</span><br><span class="line">                                eof</span><br><span class="line">                             &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                eof         &#123;exit 1;&#125;</span><br><span class="line">            &#125;</span><br><span class="line">          "</span></span><br></pre></td></tr></table></figure>
-<h2 id="Ubuntu_u672C_u5730_u6E90"><a href="#Ubuntu_u672C_u5730_u6E90" class="headerlink" title="Ubuntu本地源"></a>Ubuntu本地源</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg-scanpackages packs /dev/null |gzip &gt; packs/Packages.gz -r</span><br></pre></td></tr></table></figure>
-
+        <p>###密封Linux虚拟机为部署模板</p>
+<p>##在其成模板之前。这防止从模板部署的虚拟机之间的冲突。</p>
+<p>1。登录到虚拟机。标志系统进行重新配置，以root身份运行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># touch /.unconfigured</span></span><br></pre></td></tr></table></figure>
+<p>2。删除主机的ssh密钥，运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># rm -rf /etc/ssh/ssh_host_*</span></span><br></pre></td></tr></table></figure>
+<p>3。设置/etc/sysconfig/network 中HOSTNAME=localhost.localdomain 。</p>
+<p>4。删除/ etc/udev/rules.d/70- *，运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># rm -rf /etc/udev/rules.d/70-*</span></span><br></pre></td></tr></table></figure>
+<p>5。删除/etc/sysconfig/network-scripts/ifcfg-eth* 中 HWADDR 、UUID行。</p>
+<p>6。（可选）从 /var/log 目录中删除所有日志记录，删除命令历史记录。</p>
+<p>7。关闭虚拟机，运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># poweroff</span></span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="ciib4w61v000530muxikcolgs" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/18/密封Linux虚拟机为部署模板/" data-id="ciib4w61r000330mu7bi7v9hp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -97,19 +125,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/12/09/openstack镜像控制台日志重定向/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          openstack镜像控制台日志重定向
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/12/09/openstack虚拟机spice配置/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/12/14/虚拟机磁盘扩容/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">openstack虚拟机spice配置</div>
+      <div class="article-nav-title">虚拟机磁盘扩容</div>
     </a>
   
 </nav>
