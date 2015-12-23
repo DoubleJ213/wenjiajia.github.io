@@ -3,21 +3,18 @@
 <head>
   <meta charset="utf-8">
   
-  <title>虚拟化标志 | DoubleJ</title>
+  <title>nova源码解析之 _get_guest_config | DoubleJ</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="We’ll need to take a peek inside the /proc/cpuinfo file and look at the flages section for one of two values,vmx or svm
-12· vmx - (intel)· svm - (amd)">
+  <meta name="description" content="An accumulation of experience and knowledge">
 <meta property="og:type" content="article">
-<meta property="og:title" content="虚拟化标志">
-<meta property="og:url" content="http://wenjiajia.github.io/2015/12/10/虚拟化标志/index.html">
+<meta property="og:title" content="nova源码解析之 _get_guest_config">
+<meta property="og:url" content="http://wenjiajia.github.io/2015/12/23/nova源码解析之-get-guest-config/index.html">
 <meta property="og:site_name" content="DoubleJ">
-<meta property="og:description" content="We’ll need to take a peek inside the /proc/cpuinfo file and look at the flages section for one of two values,vmx or svm
-12· vmx - (intel)· svm - (amd)">
-<meta property="og:updated_time" content="2015-12-10T06:36:52.628Z">
+<meta property="og:description" content="An accumulation of experience and knowledge">
+<meta property="og:updated_time" content="2015-12-23T06:02:32.530Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="虚拟化标志">
-<meta name="twitter:description" content="We’ll need to take a peek inside the /proc/cpuinfo file and look at the flages section for one of two values,vmx or svm
-12· vmx - (intel)· svm - (amd)">
+<meta name="twitter:title" content="nova源码解析之 _get_guest_config">
+<meta name="twitter:description" content="An accumulation of experience and knowledge">
   
     <link rel="alternative" href="/atom.xml" title="DoubleJ" type="application/atom+xml">
   
@@ -63,10 +60,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-虚拟化标志" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-nova源码解析之-get-guest-config" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/12/10/虚拟化标志/" class="article-date">
-  <time datetime="2015-12-10T06:12:02.000Z" itemprop="datePublished">2015-12-10</time>
+    <a href="/2015/12/23/nova源码解析之-get-guest-config/" class="article-date">
+  <time datetime="2015-12-23T06:02:32.000Z" itemprop="datePublished">2015-12-23</time>
 </a>
     
   </div>
@@ -77,7 +74,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      虚拟化标志
+      nova源码解析之 _get_guest_config
     </h1>
   
 
@@ -85,12 +82,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>We’ll need to take a peek inside the /proc/cpuinfo file and look at the flages section for one of two values,vmx or svm</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">· vmx - (intel)</span><br><span class="line">· svm - (amd)</span><br></pre></td></tr></table></figure>
+        
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="ciiiezbow000354mu40lyr1uf" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/23/nova源码解析之-get-guest-config/" data-id="ciiiezbpk000b54mu2v45poa4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -99,19 +95,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/12/10/SMP对称多处理器/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          SMP对称多处理器
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/12/09/nova-conf/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2015/12/23/虚拟机与宿主机通讯/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">nova.conf</div>
+      <div class="article-nav-title">虚拟机与宿主机通讯</div>
     </a>
   
 </nav>
