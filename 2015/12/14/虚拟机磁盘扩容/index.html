@@ -19,7 +19,7 @@ raw格式的毛病一大堆，什么厚磁盘模式啦；什么不支持snap了�
 raw格式的毛病一大堆，什么厚磁盘模式啦；什么不支持snap了之类的，但它有一个最大的优势：因为raw是条带化的，扩容相当方便！
 创建一个空白的raw，10G的额外空间。
 12qemu-img create -f">
-<meta property="og:updated_time" content="2015-12-23T03:40:59.918Z">
+<meta property="og:updated_time" content="2015-12-23T05:18:15.640Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="虚拟机磁盘扩容">
 <meta name="twitter:description" content="首先，在宿主机上关闭虚拟机，qcow2格式不支持扩容，转换磁盘格式为raw：
@@ -104,12 +104,11 @@ raw格式的毛病一大堆，什么厚磁盘模式啦；什么不支持snap了�
 <p>好吧，技术上讲现在已经可以挂装硬盘了，但照旧，我们还是要把raw转换成qcow2，把第一条命令反过来用而已</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">qemu-img convert <span class="operator">-f</span> raw test.raw -O qcow2 test.qcow2</span><br></pre></td></tr></table></figure>
 <p>由于文件名经过两次转换之后没有改动过，所以不需要在vrish里做任何调整，直接开启虚拟主机就可以了。</p>
-<p>qemu-img convert -O qcow2 before_rebase.qcow2 after_rebase.qcow2</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/14/虚拟机磁盘扩容/" data-id="ciiidco200001l4muhbrttubk" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/14/虚拟机磁盘扩容/" data-id="ciiide52v0001w0muvni2z1wm" class="article-share-link">Share</a>
       
       
     </footer>
