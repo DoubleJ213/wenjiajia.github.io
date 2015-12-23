@@ -61,6 +61,54 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-虚拟机与宿主机通讯" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/23/虚拟机与宿主机通讯/" class="article-date">
+  <time datetime="2015-12-23T05:47:06.000Z" itemprop="datePublished">2015-12-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/23/虚拟机与宿主机通讯/">虚拟机与宿主机通讯</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>宿主机和虚拟机进行交互的方式，这种方式不依赖于网络，而是依赖于virtio-serial（默认首选方式）或者isa-serial，而QEMU则提供了串口设备的模拟及数据交换的通道，最终呈现出来的是一个串口设备（虚拟机内部）和一个unix socket文件（宿主机上）。</p>
+<p>　　qga通过读写串口设备与宿主机上的socket通道进行交互，宿主机上可以使用普通的unix socket读写方式对socket文件进行读写，最终实现与qga的交互，交互的协议与qmp（QEMU Monitor Protocol）相同（简单来说就是使用JSON格式进行数据交换），串口设备的速率通常都较低，所以比较适合小数据量的交换</p>
+<p>虚拟机配置文件添加</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;channel <span class="built_in">type</span>=<span class="string">'unix'</span>&gt;</span><br><span class="line">&lt;<span class="built_in">source</span> mode=<span class="string">'bind'</span> path=<span class="string">'/var/lib/libvirt/qemu/s-7-VM.agent'</span>/&gt;</span><br><span class="line">&lt;target <span class="built_in">type</span>=<span class="string">'virtio'</span> name=<span class="string">'s-7-VM.vport'</span>/&gt;</span><br><span class="line">&lt;address <span class="built_in">type</span>=<span class="string">'virtio-serial'</span>/&gt;</span><br><span class="line">&lt;/channel&gt;</span><br></pre></td></tr></table></figure>
+<p>测试数据，在宿主机使用脚本发送信息，在虚拟机能读信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/python</span></span><br><span class="line">import socket</span><br><span class="line">import time</span><br><span class="line">s=socket.socket(socket.AF_UNIX,socket.SOCK_STREAM)</span><br><span class="line">s.connect(<span class="string">"/var/lib/libvirt/qemu/s-7-VM.agent"</span>)</span><br><span class="line">s.send(<span class="string">"test\n"</span>)</span><br><span class="line">time.sleep(<span class="number">5</span>)</span><br><span class="line">s.close</span><br></pre></td></tr></table></figure>
+<p>ubuntu server的虚拟机中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install qemu-guest-agent</span><br></pre></td></tr></table></figure></p>
+<p>虚拟机中读取<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /dev/vport0p1</span><br></pre></td></tr></table></figure></p>
+<p>windows虚拟机需要安装  virtio-win-0.1.102 中的vioserial 驱动</p>
+<p>qemu2.0以上版本有BUG，需要修改代码自行编译安装qemu</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">index <span class="number">617</span>e034..<span class="number">1</span>e9895e <span class="number">100644</span></span><br><span class="line">--- a/qemu-char.c</span><br><span class="line">+++ b/qemu-char.c</span><br><span class="line">@@ -<span class="number">2847</span>,<span class="number">11</span> +<span class="number">2847</span>,<span class="number">13</span> @@ static gboolean tcp_chr_<span class="built_in">read</span>(GIOChannel *chan, GIOCondition cond, void *opaque)</span><br><span class="line">     uint8_t buf[READ_BUF_LEN];</span><br><span class="line">     int len, size;</span><br><span class="line"></span><br><span class="line">+<span class="comment">#ifdef _WIN32</span></span><br><span class="line">     <span class="keyword">if</span> (cond &amp; G_IO_HUP) &#123;</span><br><span class="line">         /* connection closed */</span><br><span class="line">         tcp_chr_disconnect(chr);</span><br><span class="line">         <span class="built_in">return</span> TRUE;</span><br><span class="line">     &#125;</span><br><span class="line">+<span class="comment">#endif</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">if</span> (!s-&gt;connected || s-&gt;max_size &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">         <span class="built_in">return</span> TRUE;</span><br><span class="line">@@ -<span class="number">2860</span>,<span class="number">7</span> +<span class="number">2862</span>,<span class="number">7</span> @@ static gboolean tcp_chr_<span class="built_in">read</span>(GIOChannel *chan, GIOCondition cond, void *opaque)</span><br><span class="line">     <span class="keyword">if</span> (len &gt; s-&gt;max_size)</span><br><span class="line">         len = s-&gt;max_size;</span><br><span class="line">     size = tcp_chr_recv(chr, (void *)buf, len);</span><br><span class="line">-    <span class="keyword">if</span> (size == <span class="number">0</span>) &#123;</span><br><span class="line">+    <span class="keyword">if</span> (size == <span class="number">0</span> || (size &lt; <span class="number">0</span> &amp;&amp; (cond &amp; G_IO_HUP))) &#123;</span><br><span class="line">         /* connection closed */</span><br><span class="line">         tcp_chr_disconnect(chr);</span><br><span class="line">     &#125; <span class="keyword">else</span> <span class="keyword">if</span> (size &gt; <span class="number">0</span>) &#123;</span><br><span class="line">-- </span><br><span class="line"><span class="number">1.7</span>.<span class="number">10.4</span></span><br></pre></td></tr></table></figure>
+<p>qemu 和 libvirt 编译参数</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">libvirt configure 参数 ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var/lib/libvirt --with-storage-rbd --with-qemu --without-uml --without-test --without-xen --without-vmware --without-openvz --without-vbox --without-lxc <span class="built_in">exec</span>_prefix=/usr libdir=/usr/lib64 includedir=/usr/include</span><br><span class="line"></span><br><span class="line">qemu config 参数 ./configure --target-list=x86_64-softmmu --enable-kvm --enable-guest-agent --enable-rbd --enable-spice --enable-linux-aio --enable-libusb --enable-usb-redir --prefix=/usr</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wenjiajia.github.io/2015/12/23/虚拟机与宿主机通讯/" data-id="ciiiesfej0002asmugk51hytz" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-qemu管理镜像" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/23/qemu管理镜像/" class="article-date">
@@ -113,7 +161,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/23/qemu管理镜像/" data-id="ciiide5380006w0mupr5upphq" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/23/qemu管理镜像/" data-id="ciiiesff60007asmum1i62kac" class="article-share-link">Share</a>
       
       
     </footer>
@@ -160,7 +208,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/18/密封Linux虚拟机为部署模板/" data-id="ciiide5300003w0mu1h0sowx3" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/18/密封Linux虚拟机为部署模板/" data-id="ciiiesfev0004asmu5frtfm7m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -206,7 +254,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/14/虚拟机磁盘扩容/" data-id="ciiide52v0001w0muvni2z1wm" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/14/虚拟机磁盘扩容/" data-id="ciiiesfd90001asmu25qhgs9h" class="article-share-link">Share</a>
       
       
     </footer>
@@ -264,7 +312,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/" data-id="ciiide53k0009w0mu68r7wuru" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/11/openstackk-virt-type初探/" data-id="ciiiesfff000aasmuml6gsp8s" class="article-share-link">Share</a>
       
       
     </footer>
@@ -362,7 +410,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/" data-id="ciiide52g0000w0mu4h2uvlf9" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/" data-id="ciiiesfc40000asmu1swqy354" class="article-share-link">Share</a>
       
       
     </footer>
@@ -408,7 +456,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/SMP对称多处理器/" data-id="ciiide53q000bw0mu7t575hdu" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/SMP对称多处理器/" data-id="ciiiesffm000casmunj3dlqb2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -445,7 +493,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="ciiide52y0002w0muo08mdw2d" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/10/虚拟化标志/" data-id="ciiiesfem0003asmumazx7ylp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -481,7 +529,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="ciiide53n000aw0muqeuodkkw" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/nova-conf/" data-id="ciiiesffj000basmupfyz1gqf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -519,45 +567,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="ciiide53e0007w0mumgsjw0hs" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-shell小工具" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/12/09/shell小工具/" class="article-date">
-  <time datetime="2015-12-09T04:45:31.000Z" itemprop="datePublished">2015-12-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/09/shell小工具/">shell小工具</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="expect"><a href="#expect" class="headerlink" title="expect"></a>expect</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">expect -c <span class="string">"</span><br><span class="line">    set timeout 30;</span><br><span class="line">    spawn scp -o StrictHostKeyChecking=no <span class="variable">$&#123;Test_DIR&#125;</span>/etc/objects/hosts/<span class="variable">$&#123;HOSTNAME&#125;</span>.cfg root@<span class="variable">$CONTROL_NODE_IP</span>:<span class="variable">$&#123;Test_DIR&#125;</span>/etc/objects/hosts/<span class="variable">$&#123;HOSTNAME&#125;</span>.cfg</span><br><span class="line">    expect &#123;</span><br><span class="line">                *assword:* &#123;send -- <span class="variable">$CONTROL_NODE_ROOT_PASSWORD</span>\r;</span><br><span class="line">                             expect &#123;</span><br><span class="line">                                *denied* &#123;exit 2;&#125;</span><br><span class="line">                                eof</span><br><span class="line">                             &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                eof         &#123;exit 1;&#125;</span><br><span class="line">            &#125;</span><br><span class="line">          "</span></span><br></pre></td></tr></table></figure>
-<h2 id="Ubuntu_u672C_u5730_u6E90"><a href="#Ubuntu_u672C_u5730_u6E90" class="headerlink" title="Ubuntu本地源"></a>Ubuntu本地源</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpkg-scanpackages packs /dev/null |gzip &gt; packs/Packages.gz -r</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/shell小工具/" data-id="ciiide5340005w0mupsven6fm" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack镜像控制台日志重定向/" data-id="ciiiesffb0008asmuuxzjkrxw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -586,7 +596,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">12</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">13</span></li></ul>
     </div>
   </div>
 
@@ -596,6 +606,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/12/23/虚拟机与宿主机通讯/">虚拟机与宿主机通讯</a>
+          </li>
         
           <li>
             <a href="/2015/12/23/qemu管理镜像/">qemu管理镜像</a>
@@ -611,10 +625,6 @@
         
           <li>
             <a href="/2015/12/11/openstackk-virt-type初探/">openstackk virt_type初探</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/">Add Memory vCPU Hard Disk to Linux KVM Virtual Machine</a>
           </li>
         
       </ul>
