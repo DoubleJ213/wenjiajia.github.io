@@ -61,6 +61,50 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-openstack虚拟机spice配置" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/12/09/openstack虚拟机spice配置/" class="article-date">
+  <time datetime="2015-12-09T04:35:52.000Z" itemprop="datePublished">2015-12-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/12/09/openstack虚拟机spice配置/">openstack虚拟机spice配置</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="u63A7_u5236_u8282_u70B9"><a href="#u63A7_u5236_u8282_u70B9" class="headerlink" title="控制节点"></a>控制节点</h2><h3 id="u5B89_u88C5"><a href="#u5B89_u88C5" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$  apt-get install nova-spiceproxy spice-html5 spice-vdagent</span><br></pre></td></tr></table></figure>
+<h3 id="u914D_u7F6E"><a href="#u914D_u7F6E" class="headerlink" title="配置"></a>配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/nova/nova.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># Vnc configuration</span></span><br><span class="line"><span class="comment">#vnc_enabled=false</span></span><br><span class="line">[spice]</span><br><span class="line">enabled=<span class="literal">true</span></span><br><span class="line">html5proxy_base_url=http://<span class="number">192.168</span>.<span class="number">29.81</span>:<span class="number">6082</span>/spice_auto.html</span><br><span class="line">keymap=en-us</span><br><span class="line">server_listen=<span class="number">0.0</span>.<span class="number">0.0</span></span><br><span class="line">server_proxyclient_address=<span class="number">192.168</span>.<span class="number">29.81</span></span><br><span class="line">agent_enabled=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h3 id="u91CD_u542F_u670D_u52A1"><a href="#u91CD_u542F_u670D_u52A1" class="headerlink" title="重启服务"></a>重启服务</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/bin/;<span class="keyword">for</span> i <span class="keyword">in</span> $(ls nova-*);<span class="keyword">do</span> sudo service <span class="variable">$i</span> restart;<span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<h2 id="u8BA1_u7B97_u8282_u70B9"><a href="#u8BA1_u7B97_u8282_u70B9" class="headerlink" title="计算节点"></a>计算节点</h2><h3 id="u5B89_u88C5-1"><a href="#u5B89_u88C5-1" class="headerlink" title="安装"></a>安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install spice-vdagent</span><br></pre></td></tr></table></figure>
+<h3 id="u914D_u7F6E-1"><a href="#u914D_u7F6E-1" class="headerlink" title="配置"></a>配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">nano /etc/nova/nova.conf</span><br><span class="line"></span><br><span class="line">vnc_enabled=<span class="literal">false</span></span><br><span class="line">novnc_enabled=<span class="literal">false</span></span><br><span class="line">[spice]</span><br><span class="line">agent_enabled=<span class="literal">true</span></span><br><span class="line">enabled=<span class="literal">true</span></span><br><span class="line">html5proxy_base_url=http://<span class="number">192.168</span>.<span class="number">29.81</span>:<span class="number">6082</span>/spice_auto.html</span><br><span class="line">keymap=en-us</span><br><span class="line">server_listen=<span class="number">0.0</span>.<span class="number">0.0</span></span><br><span class="line">server_proxyclient_address=<span class="number">192.168</span>.<span class="number">29.92</span></span><br><span class="line">agent_enabled=<span class="literal">false</span></span><br></pre></td></tr></table></figure>
+<h3 id="u91CD_u542F"><a href="#u91CD_u542F" class="headerlink" title="重启"></a>重启</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /usr/bin/;<span class="keyword">for</span> i <span class="keyword">in</span> $(ls nova-*);<span class="keyword">do</span> sudo service <span class="variable">$i</span> restart;<span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+<h3 id="u5907_u6CE8"><a href="#u5907_u6CE8" class="headerlink" title="备注"></a>备注</h3><p>如果已经存在虚拟机，虚拟机需要硬重启才能生效</p>
+<p>可以到计算节点查看指定主机的端口，默认是5900</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep spice</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://wenjiajia.github.io/2015/12/09/openstack虚拟机spice配置/" data-id="ciiidco680008l4muidat4lxd" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-ubuntu-14-04server搭建samba服务器" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/09/ubuntu-14-04server搭建samba服务器/" class="article-date">
@@ -96,7 +140,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://wenjiajia.github.io/2015/12/09/ubuntu-14-04server搭建samba服务器/" data-id="ciib4xxwe00043gmu04vfwivb" class="article-share-link">Share</a>
+      <a data-url="http://wenjiajia.github.io/2015/12/09/ubuntu-14-04server搭建samba服务器/" data-id="ciiidco5w0004l4muinbdiaee" class="article-share-link">Share</a>
       
       
     </footer>
@@ -125,7 +169,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">11</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">12</span></li></ul>
     </div>
   </div>
 
@@ -135,6 +179,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/12/23/qemu管理镜像/">qemu管理镜像</a>
+          </li>
         
           <li>
             <a href="/2015/12/18/密封Linux虚拟机为部署模板/">密封Linux虚拟机为部署模板</a>
@@ -150,10 +198,6 @@
         
           <li>
             <a href="/2015/12/10/Add-Memory-vCPU-Hard-Disk-to-Linux-KVM-Virtual-Machine/">Add Memory vCPU Hard Disk to Linux KVM Virtual Machine</a>
-          </li>
-        
-          <li>
-            <a href="/2015/12/10/SMP对称多处理器/">SMP对称多处理器</a>
           </li>
         
       </ul>
